@@ -16,6 +16,12 @@
 {{ $library := .Get "library" | default true }}
 {{ $alt := .Get "alt" | default "" }}
 {{ $library := .Get "library" | default false }}
+{{ $fixSpacing := .Get "fixSpacing" | false }}
+
+{{/* The shortcode supports up to 12 columns */}}
+{{ if (gt $numCols 12) }}
+  {{ $numCols == 12 }}
+{{ end }}
 
 {{/* Calculate col width */}}
 {{ $colSize := printf "col-%d" (int (math.Floor (div 12.0 $numCols))) }}
@@ -23,9 +29,15 @@
 {{/* Declare some variables */}}
 {{ $asset := "" }}
 {{ $image_src := "" }}
+{{ $justify := "justify-content-between" }}
+
+{{/* Change flex behaviour if user want a fixed spacing */}}
+{{ if $fixSpacing }}
+  {{ $justify = "justify-content-center" }}
+{{ end }}
 
 <figure>
-<div class="d-flex flex-wrap justify-content-center">
+<div class="d-flex flex-wrap {{ with $justify }}{{ . }}{{ end }}">
 {{ range $img_index, $img := $scrArray }}
 
   {{ if $library }}
