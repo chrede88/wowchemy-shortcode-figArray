@@ -16,7 +16,7 @@
 {{ $library := .Get "library" | default true }}
 {{ $alt := .Get "alt" | default "" }}
 {{ $library := .Get "library" | default false }}
-{{ $fixSpacing := .Get "fixSpacing" | false }}
+{{ $fixSpacing := .Get "fixSpacing" | default false }}
 
 {{/* The shortcode supports up to 12 columns */}}
 {{ if (gt $numCols 12) }}
