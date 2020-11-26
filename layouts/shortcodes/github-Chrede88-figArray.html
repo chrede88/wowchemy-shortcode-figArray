@@ -29,6 +29,7 @@
 {{/* Declare some variables */}}
 {{ $asset := "" }}
 {{ $image_src := "" }}
+{{ $uniqueName := printf "images-%d" now.Unix }}
 {{ $justify := "justify-content-between" }}
 
 {{/* Change flex behaviour if user want a fixed spacing */}}
@@ -48,7 +49,7 @@
   {{ end }}
 
   <div class="{{with $colSize}}{{ . }}{{ end }} p-1">
-    <a href="{{$image_src}}" data-fancybox="images" {{ with (index $thumbCaption $img_index) }}data-caption="{{ .|markdownify|emojify|safeHTMLAttr }}"{{ end }}>
+    <a href="{{$image_src}}" data-fancybox="{{$uniqueName}}" {{ with (index $thumbCaption $img_index) }}data-caption="{{ .|markdownify|emojify|safeHTMLAttr }}"{{ end }}>
       <img data-src="{{$image_src}}" class="lazyload" alt="{{$alt}}"/>
     </a>
   </div>
