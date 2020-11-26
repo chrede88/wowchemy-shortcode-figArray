@@ -1,0 +1,55 @@
+{{/* Enable an array of images to be loaded from local page dir or media library at `static/media/`.
+     Pass "srcArray" and "thumbCaption" as comma seperated strings.
+     Set "numCols" to the wanted number of columns.
+     A general figure caption should be passed as "figCaption" */}}
+
+{{ $page := .Page }}
+{{ $media_dir := site.Params.media_dir | default "media" }}
+
+{{/* Parse data arrays */}}
+{{ $scrArray := split (.Get "srcArray") "," }}
+{{ $thumbCaption := split (.Get "thumbCaption") "," }}
+
+{{/* Parse all other variables */}}
+{{ $figCaption := .Get "figCaption" | default "" }}
+{{ $numCols := .Get "numCols" | default 2 }}
+{{ $library := .Get "library" | default true }}
+{{ $alt := .Get "alt" | default "" }}
+{{ $library := .Get "library" | default false }}
+
+{{/* Calculate col width */}}
+{{ $colSize := printf "col-%d" (int (math.Floor (div 12.0 $numCols))) }}
+
+{{/* Declare some variables */}}
+{{ $asset := "" }}
+{{ $image_src := "" }}
+
+<figure>
+<div class="d-flex flex-wrap justify-content-center">
+{{ range $img_index, $img := $scrArray }}
+
+  {{ if $library }}
+    {{ $image_src = printf "%s/%s" $media_dir $img | relURL }}
+  {{ else }}
+    {{ $asset = ($page.Resources.ByType "image").GetMatch $img }}
+    {{ $image_src = $asset.RelPermalink }}
+  {{ end }}
+
+  <div class="{{with $colSize}}{{ . }}{{ end }} p-1">
+    <a href="{{$image_src}}" data-fancybox="images" {{ with (index $thumbCaption $img_index) }}data-caption="{{ .|markdownify|emojify|safeHTMLAttr }}"{{ end }}>
+      <img data-src="{{$image_src}}" class="lazyload" alt="{{$alt}}"/>
+    </a>
+  </div>
+
+{{ end }}
+
+</div>
+
+{{ if $figCaption }}
+  {{/* Localize the figure numbering (if enabled). */}}
+  {{ $figure := split (i18n "figure" | default "Figure %d:") "%d" }}
+  <figcaption{{ if eq (.Get "numbered") "true" }} data-pre="{{ index $figure 0 }}" data-post="{{ index $figure 1 }}" class="numbered"{{ end }}>
+    {{ $figCaption | markdownify | emojify }}
+  </figcaption>
+{{ end }}
+</figure>

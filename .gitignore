@@ -4,3 +4,6 @@
 
 # Hugo
 resources/
+
+# DS_STORE
+.DS_Store
