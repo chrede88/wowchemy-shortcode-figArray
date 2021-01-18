@@ -2,7 +2,7 @@
 
 _[**Wowchemy**](https://wowchemy.com) makes it easy to create a beautiful website for free. Edit your site in Markdown, Jupyter, or RStudio, generate it with Hugo, and deploy with GitHub or Netlify. Customize anything on your site with widgets, themes, and language packs._
 
-## 🌈 Add the Widget to your Site
+## 🌈 Add the shortcode to your Site
 
 1. Install the shortcode in your site by referencing it at the bottom of your `config/_defaults/config.toml`:
    ```toml
