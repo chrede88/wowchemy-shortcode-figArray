@@ -7,8 +7,8 @@
 {{ $media_dir := site.Params.media_dir | default "media" }}
 
 {{/* Parse data arrays */}}
-{{ $scrArray := split (.Get "srcArray") "," }}
-{{ $thumbCaption := split (.Get "thumbCaption") "," }}
+{{ $scrArray := split (.Get "srcArray") ";" }}
+{{ $thumbCaption := split (.Get "thumbCaption") ";" }}
 
 {{/* Parse all other variables */}}
 {{ $figCaption := .Get "figCaption" | default "" }}
@@ -29,7 +29,7 @@
 {{/* Declare some variables */}}
 {{ $asset := "" }}
 {{ $image_src := "" }}
-{{ $uniqueName := printf "images-%d" now.Unix }}
+{{ $uniqueName := printf "gallery-%d" now.Unix }}
 {{ $justify := "justify-content-between" }}
 
 {{/* Change flex behaviour if user want a fixed spacing */}}
@@ -40,17 +40,14 @@
 <figure>
 <div class="d-flex flex-wrap {{ with $justify }}{{ . }}{{ end }}">
 {{ range $img_index, $img := $scrArray }}
-
-  {{ if $library }}
-    {{ $image_src = printf "%s/%s" $media_dir $img | relURL }}
-  {{ else }}
-    {{ $asset = ($page.Resources.ByType "image").GetMatch $img }}
-    {{ $image_src = $asset.RelPermalink }}
-  {{ end }}
+  {{ $asset = ($page.Resources.ByType "image").GetMatch $img }}
+  {{ $img_md := $asset.Fit "760x760" }}{{/* Match `.docs-article-container` max-width */}}
+  {{ $width := $img_md.Width }}
+  {{ $height := $img_md.Height }}
 
   <div class="{{with $colSize}}{{ . }}{{ end }} p-1">
-    <a href="{{$image_src}}" data-fancybox="{{$uniqueName}}" {{ with (index $thumbCaption $img_index) }}data-caption="{{ .|markdownify|emojify|safeHTMLAttr }}"{{ end }}>
-      <img data-src="{{$image_src}}" class="lazyload" alt="{{$alt}}" width="{{ $image_src.Width }}" height="{{ $image_src.Height }}"/>
+    <a data-fancybox="{{$uniqueName}}" href="{{$asset.RelPermalink}}" {{ with (index $thumbCaption $img_index) }}data-caption="{{ .|markdownify|emojify|safeHTMLAttr }}"{{ end }}>
+      <img alt="" src="{{ $img_md.RelPermalink }}" width="{{ $width }}" height="{{ $height }}" loading="lazy"/>
     </a>
   </div>
 
