@@ -1,4 +1,4 @@
-# AuthorIntro Widget for Wowchemy
+# Figure array shortcode for Wowchemy
 
 _[**Wowchemy**](https://wowchemy.com) makes it easy to create a beautiful website for free. Edit your site in Markdown, Jupyter, or RStudio, generate it with Hugo, and deploy with GitHub or Netlify. Customize anything on your site with widgets, themes, and language packs._
 
@@ -18,4 +18,8 @@ _[**Wowchemy**](https://wowchemy.com) makes it easy to create a beautiful websit
    ```markdown
    {{< github-Chrede88-figArray numCols=<numCols> srcArray="image1.jpg,image2.jpg,image3.jpg" thumbCaption="thumb1,thumb2,thumb3" figCaption="figCaption" >}}
    ```
+   
+3. Enable fancybox through the site:
+
+   Add `require_fancybox = true` to `./config/_default/params.toml/`
 
