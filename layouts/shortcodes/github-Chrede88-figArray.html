@@ -50,7 +50,7 @@
 
   <div class="{{with $colSize}}{{ . }}{{ end }} p-1">
     <a href="{{$image_src}}" data-fancybox="{{$uniqueName}}" {{ with (index $thumbCaption $img_index) }}data-caption="{{ .|markdownify|emojify|safeHTMLAttr }}"{{ end }}>
-      <img data-src="{{$image_src}}" class="lazyload" alt="{{$alt}}"/>
+      <img data-src="{{$image_src}}" class="lazyload" alt="{{$alt}}" width="{{ $image_src.Width }}" height="{{ $image_src.Height }}"/>
     </a>
   </div>
 
