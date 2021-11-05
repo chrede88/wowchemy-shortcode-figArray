@@ -28,7 +28,7 @@
 {{/* Declare some variables */}}
 {{ $asset := "" }}
 {{ $image_src := "" }}
-{{ $uniqueName := printf "gallery-%d" now.Unix }}
+{{ $uniqueName := printf "gallery-%d" .Ordinal }}
 {{ $justify := "justify-content-between" }}
 
 {{/* Change flex behaviour if user want a fixed spacing */}}
